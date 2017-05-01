@@ -1,5 +1,9 @@
 # silly macOS
 .DS_Store
 
+#ignore temp recovery files
+.*~*
+!/.gitignore
+
 # build files
 build/
