@@ -53,10 +53,10 @@ UKF::UKF() {
   P_ = MatrixXd::Identity(n_x_,n_x_);
 
   // Process noise standard deviation longitudinal acceleration in m/s^2
-  std_a_ = 0.2;
+  std_a_ = 0.25;
 
   // Process noise standard deviation yaw acceleration in rad/s^2
-  std_yawdd_ = 2.0/100.0*M_PI;
+  std_yawdd_ = 20.0/100.0*M_PI;
 
   // Laser measurement noise standard deviation position1 in m
   std_laspx_ = 0.15;
@@ -226,7 +226,7 @@ void UKF::AugmentedSigmaPoints(MatrixXd* Xsig_out) {
   }
 
   //print result
-  std::cout << "Xsig_aug = " << std::endl << Xsig_aug << std::endl;
+//  std::cout << "Xsig_aug = " << std::endl << Xsig_aug << std::endl;
 
   //write result
   *Xsig_out = Xsig_aug;
@@ -289,7 +289,7 @@ void UKF::SigmaPointPrediction(MatrixXd* Xsig_out,const MatrixXd& Xsig_aug, cons
   }
 
   //print result
-  std::cout << "Xsig_pred = " << std::endl << Xsig_pred << std::endl;
+//  std::cout << "Xsig_pred = " << std::endl << Xsig_pred << std::endl;
 
   //write result
   *Xsig_out = Xsig_pred;
@@ -342,10 +342,10 @@ void UKF::PredictMeanAndCovariance(VectorXd* x_out, MatrixXd* P_out, VectorXd* w
   }
 
   //print result
-  std::cout << "Predicted state" << std::endl;
-  std::cout << x << std::endl;
-  std::cout << "Predicted covariance matrix" << std::endl;
-  std::cout << P << std::endl;
+//  std::cout << "Predicted state" << std::endl;
+//  std::cout << x << std::endl;
+//  std::cout << "Predicted covariance matrix" << std::endl;
+//  std::cout << P << std::endl;
 
   //write result
   *x_out = x;
@@ -413,8 +413,8 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
    S = S + R;
 
    //print result
-   std::cout << "z_pred: " << std::endl << z_pred << std::endl;
-   std::cout << "S: " << std::endl << S << std::endl;
+//   std::cout << "z_pred: " << std::endl << z_pred << std::endl;
+//   std::cout << "S: " << std::endl << S << std::endl;
 
 
    /*****************************************************************************
@@ -451,18 +451,19 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
    P_ = P_ - K*S*K.transpose();
 
    //print result
-   std::cout << "Updated state x: " << std::endl << x_ << std::endl;
-   std::cout << "Updated state covariance P: " << std::endl << P_ << std::endl;
+//   std::cout << "Updated state x: " << std::endl << x_ << std::endl;
+//   std::cout << "Updated state covariance P: " << std::endl << P_ << std::endl;
 
    /*****************************************************************************
     *  NIS of Lidar Measurement
     ****************************************************************************/
+   // Chi-Square 95-percentile  Probability for Lidar with 2 degrees of freedom is 5.991
 
    //calculate NIS value
    NIS_laser_ = z_diff.transpose()*S.inverse()*z_diff;
 
    //print result
-   std::cout << "NIS_laser: " << std::endl << NIS_laser_ << std::endl;
+//   std::cout << "NIS_laser: " << std::endl << NIS_laser_ << std::endl;
 }
 
 /**
@@ -532,8 +533,8 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
    S = S + R;
 
    //print result
-   std::cout << "z_pred: " << std::endl << z_pred << std::endl;
-   std::cout << "S: " << std::endl << S << std::endl;
+//   std::cout << "z_pred: " << std::endl << z_pred << std::endl;
+//   std::cout << "S: " << std::endl << S << std::endl;
 
 
    /*****************************************************************************
@@ -577,18 +578,19 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
    P_ = P_ - K*S*K.transpose();
 
    //print result
-   std::cout << "Updated state x: " << std::endl << x_ << std::endl;
-   std::cout << "Updated state covariance P: " << std::endl << P_ << std::endl;
+//   std::cout << "Updated state x: " << std::endl << x_ << std::endl;
+//   std::cout << "Updated state covariance P: " << std::endl << P_ << std::endl;
 
    /*****************************************************************************
     *  NIS of Radar Measurement
     ****************************************************************************/
-
+   // Chi-Square 95-percentile  Probability for Radar with 3 degrees of freedom is 7.815
    //calculate NIS value
    NIS_radar_ = z_diff.transpose()*S.inverse()*z_diff;
 
+
    //print result
-   std::cout << "NIS_radar: " << std::endl << NIS_radar_ << std::endl;
+//   std::cout << "NIS_radar: " << std::endl << NIS_radar_ << std::endl;
 
 }
 
