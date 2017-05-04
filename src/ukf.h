@@ -47,6 +47,9 @@ public:
   ///* Laser measurement noise standard deviation position2 in m
   double std_laspy_;
 
+  ///* Laser measurement noise covariance matrix
+  MatrixXd R_lidar_;
+
   ///* Radar measurement noise standard deviation radius in m
   double std_radr_;
 
@@ -56,6 +59,9 @@ public:
   ///* Radar measurement noise standard deviation radius change in m/s
   double std_radrd_ ;
 
+  ///* Radar measurement noise covariance matrix
+  MatrixXd R_radar_;
+
   ///* Weights of sigma points
   VectorXd weights_;
 
@@ -64,6 +70,9 @@ public:
 
   ///* Augmented state dimension
   int n_aug_;
+
+  ///* Number of sigma points
+  int n_sig_;
 
   // Measurement dimension for radar
   int n_z_radar_;

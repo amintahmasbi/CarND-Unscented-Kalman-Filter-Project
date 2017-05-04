@@ -1,4 +1,5 @@
 #include <iostream>
+//#include <math.h>
 #include "tools.h"
 
 using Eigen::VectorXd;
@@ -44,4 +45,11 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
 
   //return the result
   return rmse;
+}
+
+double Tools::NormalizeAngle(double x){
+    x = fmod(x + M_PI,2*M_PI);
+    if (x < 0)
+        x += 2*M_PI;
+    return x - M_PI;
 }
